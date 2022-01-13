@@ -1,10 +1,9 @@
 <template>
-  <div>signup</div>
+	<div>signup</div>
 </template>
 
 <script>
-export default {
-}
+export default {};
 </script>
 
 <style>
