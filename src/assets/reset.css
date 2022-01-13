@@ -1,12 +1,7 @@
 html {
-  color: #555;
-  font-family: "Apple SD Gothic Neo", Roboto, "Noto Sans KR", NanumGothic,
-    "Malgun Gothic", sans-serif;
-  line-height: 1.2;
   word-wrap: break-word;
 }
 body {
-  background: #eee;
   -webkit-font-smoothing: antialiased;
 }
 html,
@@ -148,4 +143,9 @@ button {
   background: transparent;
   border: 0;
   cursor: pointer;
+}
+body {
+  min-height: 100vh;
+  box-sizing: border-box;
+  line-height: 1.5;
 }
