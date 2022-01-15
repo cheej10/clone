@@ -1,75 +1,57 @@
 <template>
-  <form v-on:submit.prevent>
+  <form class="signup_form">
     <div class="title">
       <h2>회원가입</h2>
       <p>인프런에서 가치를 높이세요</p>
     </div>
-    <div class="email">
-      <p>이메일</p>
-      <input
-        type="email"
-        v-model="userInfo.email"
-        placeholder="example@inflearn.com"
-      />
-    </div>
-    <div class="email_check">
-      <p>이메일 확인</p>
-      <input
-        type="email"
-        v-model="userInfo.emailCheck"
-        placeholder="example@inflearn.com"
-      />
-    </div>
-    <div class="password">
-      <p>비밀번호</p>
-      <div class="input-box">
-        <input
-          type="password"
-          v-if="!showPW"
-          v-model="userInfo.password"
-          placeholder="******"
-        />
-        <input
-          type="text"
-          v-else
-          v-model="userInfo.password"
-          placeholder="******"
-        />
-        <i class="far fa-eye" v-if="!showPW" v-on:click="togglePWIcon"></i>
-        <i class="far fa-eye-slash" v-else v-on:click="togglePWIcon"></i>
-      </div>
-    </div>
-    <div class="password_check">
-      <p>비밀번호 확인</p>
-      <div class="input-box">
-        <input
-          type="password"
-          v-if="!showPWCheck"
-          v-model="userInfo.passwordCheck"
-          placeholder="******"
-        />
-        <input
-          type="text"
-          v-else
-          v-model="userInfo.passwordCheck"
-          placeholder="******"
-        />
-        <i
-          class="far fa-eye"
-          v-if="!showPWCheck"
-          v-on:click="toggleCheckIcon"
-        ></i>
-        <i class="far fa-eye-slash" v-else v-on:click="toggleCheckIcon"></i>
-      </div>
-    </div>
-    <button class="signupBtn" type="submit" v-on:click="welcome">
+    <Input
+      labelText="이메일"
+      type="email"
+      v-model="userInfo.email"
+      placeholder="example@inflearn.com"
+    ></Input>
+    <Input
+      labelText="이메일 확인"
+      type="email"
+      v-model="userInfo.emailCheck"
+      placeholder="example@inflearn.com"
+    ></Input>
+    <Input
+      labelText="비밀번호"
+      inputType="password"
+      :type="passwordType"
+      v-model="userInfo.password"
+      placeholder="******"
+      autocomplete="new-password"
+      @clickIcon="togglePWIcon"
+      :showPW="showPW"
+    ></Input>
+    <Input
+      labelText="비밀번호 확인"
+      inputType="password"
+      :type="passwordCheckType"
+      v-model="userInfo.passwordCheck"
+      placeholder="******"
+      autocomplete="new-password"
+      @clickIcon="toggleCheckIcon"
+      :showPW="showPWCheck"
+    ></Input>
+    <button class="signup_btn" type="button" v-on:click="welcome">
       가입하기
     </button>
+    <Footer @receiveMailCheck="receiveMailCheck"></Footer>
   </form>
 </template>
 
 <script>
+import Input from './Input.vue';
+import Footer from './Footer.vue';
+
 export default {
+  components: {
+    Input,
+    Footer,
+  },
   data() {
     return {
       userInfo: {
@@ -77,9 +59,12 @@ export default {
         emailCheck: '',
         password: '',
         passwordCheck: '',
+        receiveMailCheck: false,
       },
       showPW: false,
       showPWCheck: false,
+      passwordType: 'password',
+      passwordCheckType: 'password',
     };
   },
   methods: {
@@ -107,51 +92,31 @@ export default {
     },
     togglePWIcon() {
       this.showPW = !this.showPW;
+      this.passwordType = this.showPW ? 'text' : 'password';
     },
     toggleCheckIcon() {
       this.showPWCheck = !this.showPWCheck;
+      this.passwordCheckType = this.showPWCheck ? 'text' : 'password';
+    },
+    receiveMailCheck(checkValue) {
+      this.receiveMailCheck = checkValue;
     },
   },
 };
 </script>
 
 <style scoped>
-form {
+.signup_form {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-input {
-  box-sizing: border-box;
-  margin: 10px 0;
-  padding: 0 10px;
-  width: 300px;
-  height: 40px;
-  border: 0;
-  outline: 1px solid rgb(206, 206, 206);
-  border-radius: 5px;
-}
-input:focus {
-  outline: 1px solid #00c471;
-}
-input::placeholder {
-  color: rgb(228, 228, 228);
-}
-.input-box {
-  position: relative;
-}
-.input-box i {
-  position: absolute;
-  right: 10px;
-  top: 22px;
-  cursor: pointer;
 }
 .title {
   margin: 20px 0;
   width: 300px;
   text-align: left;
 }
-.signupBtn {
+.signup_btn {
   background-color: #00c471;
   color: white;
   font-size: 15px;
