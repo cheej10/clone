@@ -1,4 +1,8 @@
 html {
+  color: #555;
+  font-family: 'Apple SD Gothic Neo', Roboto, 'Noto Sans KR', NanumGothic,
+    'Malgun Gothic', sans-serif;
+  line-height: 1.2;
   word-wrap: break-word;
 }
 body {
@@ -117,11 +121,6 @@ legend,
 label,
 a,
 nav,
-form {
-  box-sizing: border-box;
-
-  /* content-box */
-}
 ol,
 ul,
 li {
