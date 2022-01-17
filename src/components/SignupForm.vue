@@ -1,5 +1,5 @@
 <template>
-  <form class="signup_form">
+  <form @submit.prevent class="signupForm">
     <div class="title">
       <h2>회원가입</h2>
       <p>인프런에서 가치를 높이세요</p>
@@ -36,9 +36,7 @@
       @clickIcon="toggleCheckIcon"
       :showPW="showPWCheck"
     ></Input>
-    <button class="signup_btn" type="button" v-on:click="welcome">
-      가입하기
-    </button>
+    <Button text="가입하기" @click="welcome"></Button>
     <Footer @receiveMailCheck="receiveMailCheck"></Footer>
   </form>
 </template>
@@ -46,12 +44,17 @@
 <script>
 import Input from './Input.vue';
 import Footer from './Footer.vue';
+import Button from './Button.vue';
+import checkBlank from './mixins/checkBlank';
+import togglePWIcon from './mixins/togglePWIcon';
 
 export default {
   components: {
     Input,
     Footer,
+    Button,
   },
+  mixins: [checkBlank, togglePWIcon],
   data() {
     return {
       userInfo: {
@@ -69,17 +72,13 @@ export default {
   },
   methods: {
     welcome() {
-      if (this.checkUserInfo(this.userInfo)) {
+      if (this.checkBlank() && this.checkUserInfo()) {
         alert(`${this.userInfo.email}님 환영합니다!`);
+        this.$router.push('/main');
       }
     },
-    checkUserInfo(user) {
-      for (let i in user) {
-        if (user[i] === '') {
-          alert('정보를 모두 입력해주세요.');
-          return false;
-        }
-      }
+    checkUserInfo() {
+      const user = this.userInfo;
       if (user.email !== user.emailCheck) {
         alert('이메일이 일치하지 않습니다.');
         return false;
@@ -89,10 +88,6 @@ export default {
         return false;
       }
       return true;
-    },
-    togglePWIcon() {
-      this.showPW = !this.showPW;
-      this.passwordType = this.showPW ? 'text' : 'password';
     },
     toggleCheckIcon() {
       this.showPWCheck = !this.showPWCheck;
@@ -106,7 +101,7 @@ export default {
 </script>
 
 <style scoped>
-.signup_form {
+.signupForm {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,14 +110,5 @@ export default {
   margin: 20px 0;
   width: 300px;
   text-align: left;
-}
-.signup_btn {
-  background-color: #00c471;
-  color: white;
-  font-size: 15px;
-  padding: 10px;
-  width: 300px;
-  margin-top: 20px;
-  border-radius: 5px;
 }
 </style>

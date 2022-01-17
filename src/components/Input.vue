@@ -1,7 +1,7 @@
 <template>
   <div>
     <label :for="labelText">{{ labelText }}</label>
-    <div class="input_box">
+    <div class="inputBox">
       <input
         :type="type"
         :id="labelText"
@@ -11,7 +11,7 @@
         :autocomplete="autocomplete"
       />
       <span
-        class="icon_box"
+        class="iconBox"
         v-if="inputType === 'password'"
         @click="$emit('clickIcon')"
       >
@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style scoped>
-.input_box > input {
+.inputBox > input {
   box-sizing: border-box;
   margin: 10px 0;
   padding: 0 10px;
@@ -68,16 +68,16 @@ export default {
   outline: 1px solid rgb(206, 206, 206);
   border-radius: 5px;
 }
-.input_box > input:focus {
+.inputBox > input:focus {
   outline: 1px solid #00c471;
 }
-.input_box > input::placeholder {
+.inputBox > input::placeholder {
   color: rgb(228, 228, 228);
 }
-.input_box {
+.inputBox {
   position: relative;
 }
-.icon_box {
+.iconBox {
   position: absolute;
   right: 10px;
   top: 50%;
